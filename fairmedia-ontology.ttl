@@ -1,0 +1,117 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix croissant: <https://mlcommons.org/croissant/> .
+@prefix fair: <https://joanneum.at/fairmedia/> .
+
+# Enumerations
+
+fair:DataProtectionTypeEnumeration a rdf:Class ;
+  rdfs:label "DataProtectionTypeEnumeration" ;
+  rdfs:comment "Specifies the data protection type. One of \"anonymized\" and \"personal\"." ;
+  rdfs:subClassOf schema:Enumeration .
+
+fair:ControllershipEnumeration a rdf:Class ;
+  rdfs:label "ControllershipEnumeration" ;
+  rdfs:comment "Specifies the controllership. One of \"sole controllership\" and \"joint controllership\"." ;
+  rdfs:subClassOf schema:Enumeration .
+
+# Dataset level properties
+
+schema:license a rdf:Property ;
+  rdfs:label "license" ;
+  rdfs:comment "A detailed description of the license conditions, including specific rights of use, restrictions and conditions for further processing." ;
+  schema:domainIncludes schema:Dataset ;
+  schema:rangeIncludes schema:Text .
+
+schema:conditionsOfAccess a rdf:Property ;
+  rdfs:label "conditionsOfAccess" ;
+  rdfs:comment "Defines specific access requirements, e.g. only for registered users, only for academic research or only after approval by an ethics committee, the data records come from a database behind a paywall, etc." ;
+  schema:domainIncludes schema:Dataset ;
+  schema:rangeIncludes schema:Text .
+
+fair:changelog a rdf:Property ;
+  rdfs:label "changelog" ;
+  rdfs:comment "A detailed list of the changes to this version of the dataset with the reasons for the changes." ;
+  schema:domainIncludes schema:Dataset ;
+  schema:rangeIncludes schema:Text .
+
+fair:dataSource a rdf:Property ;
+  rdfs:label "dataSource" ;
+  rdfs:comment "Specification of the source of the dataset." ;
+  schema:domainIncludes schema:Dataset ;
+  schema:rangeIncludes schema:Text .
+
+fair:dataUsageTerms a rdf:Property ;
+  rdfs:label "dataUsageTerms" ;
+  rdfs:comment "Specifies the conditions under which the data set may be processed, including permitted commercial and non-commercial uses, text and data mining, etc." ;
+  schema:domainIncludes schema:Dataset ;
+  schema:rangeIncludes schema:Text .
+
+fair:userRights a rdf:Property ;
+  rdfs:label "userRights" ;
+  rdfs:comment "Specific rights of users using the dataset, including permission to modify or redistribute datasets or the obligation to cite the source." ;
+  schema:domainIncludes schema:Dataset ;
+  schema:rangeIncludes schema:Text .
+
+fair:dataProcessingTerms a rdf:Property ;
+  rdfs:label "dataProcessingTerms" ;
+  rdfs:comment "Description of the legal basis for the collection of personal data; definition of the legal basis for the provision and further processing of personal data." ;
+  schema:domainIncludes schema:Dataset ;
+  schema:rangeIncludes schema:Text .
+
+fair:controllership a rdf:Property ;
+  rdfs:label "controllership" ;
+  rdfs:comment "Determination of controllership." ;
+  schema:domainIncludes schema:Dataset ;
+  schema:rangeIncludes fair:ControllershipEnumeration .
+
+fair:jointControllershipAgreementConcluded a rdf:Property ;
+  rdfs:label "jointControllershipAgreementConcluded" ;
+  rdfs:comment "Has a joint controllership agreement been concluded?" ;
+  schema:domainIncludes schema:Dataset ;
+  schema:rangeIncludes schema:Boolean .
+
+fair:liabilityClauses a rdf:Property ;
+  rdfs:label "liabilityClauses" ;
+  rdfs:comment "Description of the disclaimers and limitations of liability in connection with the use of the data in order to minimize legal risks for the data provider." ;
+  schema:domainIncludes schema:Dataset ;
+  schema:rangeIncludes schema:Text .
+
+fair:indemnityClauses a rdf:Property ;
+  rdfs:label "indemnityClauses" ;
+  rdfs:comment "Conditions under which the user must indemnify the data provider, including a third-party provider in the event of legal disputes." ;
+  schema:domainIncludes schema:Dataset ;
+  schema:rangeIncludes schema:Text .
+
+fair:copyright a rdf:Property ;
+  rdfs:label "copyright" ;
+  rdfs:comment "Provide a detailed description about the copyright of the datasets content." ;
+  schema:domainIncludes schema:Dataset ;
+  schema:rangeIncludes schema:Text .
+
+# Dataset level RAI properties
+
+fair:dataAnonymizationProtocol a rdf:Property ;
+  rdfs:label "dataAnonymizationProtocol" ;
+  rdfs:comment "Description of the anonymization procedures used to protect the identity of individuals in the data." ;
+  schema:domainIncludes schema:Dataset ;
+  schema:rangeIncludes schema:Text .
+
+fair:dataSecurityProtocol a rdf:Property ;
+  rdfs:label "dataSecurityProtocol" ;
+  rdfs:comment "Description of the security measures taken to protect the data, including encryption, access controls and measures to ensure data integrity, including specific safeguards for different types of personal data including sensitive data (e.g. health data, sexual orientation)." ;
+  schema:domainIncludes schema:Dataset ;
+  schema:rangeIncludes schema:Text .
+
+fair:dataProtectionType a rdf:Property ;
+  rdfs:label "dataProtectionType" ;
+  rdfs:comment "Determining whether the data is anonymous/anonymized or personal data." ;
+  schema:domainIncludes schema:Dataset ;
+  schema:rangeIncludes fair:DataProtectionTypeEnumeration .
+
+fair:personalData a rdf:Property ;
+  rdfs:label "personalData" ;
+  rdfs:comment "Description of the categories and types of personal data." ;
+  schema:domainIncludes schema:Dataset ;
+  schema:rangeIncludes schema:Text .
