@@ -53,6 +53,21 @@ Currently, Croissant covers only minimal legal information regarding datasets an
 
 To address these gaps, we have extended the Croissant specification, resulting in the [FairMedia Specification](docs/fairmedia-spec.md). The following changes and additions were made:
 
+fair:changelog: A detailed list of the changes to this version of the dataset with the reasons for the changes.
+fair:dataSource: Specification of the source of the dataset.
+fair:dataUsageTerms: Specifies the conditions under which the data set may be processed, including permitted commercial and non-commercial uses, text and data mining, etc.
+fair:userRights: Specific rights of users using the dataset, including permission to modify or redistribute datasets or the obligation to cite the source.
+fair:dataProcessingTerms: Description of the legal basis for the collection of personal data; definition of the legal basis for the provision and further processing of personal data.
+fair:controllership: Determination of controllership.
+fair:jointControllerAgreementConcluded: Has a Joint Controller Agreement (JCA) been concluded?
+fair:liabilityClauses: Description of the disclaimers and limitations of liability in connection with the use of the data in order to minimize legal risks for the data provider.
+fair:indemnityClauses: Conditions under which the user must indemnify the data provider, including a third-party provider in the event of legal disputes.
+fair:copyright: Provide a detailed description about the copyright of the datasets content.
+fair:dataAnonymizationProtocol: Description of the anonymization procedures used to protect the identity of individuals in the data.
+fair:dataSecurityProtocol: Description of the security measures taken to protect the data, including encryption, access controls and measures to ensure data integrity, including specific safeguards for different types of personal data including sensitive data (e.g. health data, sexual orientation).
+fair:dataProtectionType: Determining whether the data is anonymous/anonymized or personal data.
+fair:personalData: Description of the categories and types of personal data.
+
 ## Next Steps
 
 We plan to propose and contribute the FairMedia Specification and its extensions to the Croissant Specification.
