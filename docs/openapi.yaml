@@ -1,0 +1,941 @@
+openapi: 3.1.0
+info:
+  title: FairMedia API
+  summary: The FairMedia API provides methods to describe and manage datasets
+  description: The FairMedia API is a datacatalog that provides methods to describe and manage datasets
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+paths:
+  /login:
+    post:
+      tags:
+        - Authentication
+      summary: Authenticate
+      requestBody:
+        $ref: '#/components/requestBodies/LoginRequest'
+      responses:
+        200:
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginSelect'
+        400:
+          description: Bad request
+        401:
+          description: Invalid Username or Password
+        500:
+          description: General Error
+  /login/refresh:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - Authentication
+      summary: Refresh the Authentication token
+      requestBody:
+        $ref: '#/components/requestBodies/LoginRefreshRequest'
+      responses:
+        200:
+          description: Refresh successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginRefreshSelect'
+        400:
+          description: Invalid refresh token
+        403:
+          description: No data provided
+  /datasets/public:
+    get:
+      tags:
+        - Public Datasets
+      summary: Find all public datasets
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DatasetSelect'
+  /datasets/public/{id}:
+    parameters:
+      - name: id
+        in: path
+        description: ID of the public dataset
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags:
+        - Public Datasets
+      summary: Find public dataset by ID
+      responses:
+        200:
+          description: Public Dataset found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatasetSelect'
+            application/ld+json:
+              schema:
+                type: object
+        404:
+          description: Public Dataset not found
+  /datasets/public/getByUrl:
+    parameters:
+      - name: url
+        in: query
+        description: URL of the dataset
+        schema:
+          type: string
+    get:
+      tags:
+        - Public Datasets
+      summary: Find public dataset by Url
+      responses:
+        200:
+          description: Public Dataset found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatasetSelect'
+            application/ld+json:
+              schema:
+                type: object
+        400:
+          description: No valid url as query parameter provided
+        404:
+          description: Public Dataset not found
+  /datasets:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - Datasets
+      summary: Find all datasets
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DatasetSelect'
+        401:
+          description: Unauthorized
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - Datasets
+      summary: Add new dataset
+      requestBody:
+        $ref: '#/components/requestBodies/DatasetRequest'
+      responses:
+        201:
+          description: Dataset created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatasetSelect'
+        400:
+          description: Bad request
+        401:
+          description: Unauthorized
+  /datasets/{id}:
+    parameters:
+      - name: id
+        in: path
+        description: ID of the dataset
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - Datasets
+      summary: Find dataset by ID
+      responses:
+        200:
+          description: Dataset found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatasetSelect'
+            application/ld+json:
+              schema:
+                type: object
+        401:
+          description: Unauthorized
+        404:
+          description: Dataset not found
+    put:
+      security:
+        - bearerAuth: []
+      tags:
+        - Datasets
+      requestBody:
+        $ref: '#/components/requestBodies/DatasetRequest'
+      responses:
+        200:
+          description: Dataset updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatasetSelect'
+        401:
+          description: Unauthorized
+        404:
+          description: Dataset not found
+    delete:
+      security:
+        - bearerAuth: []
+      tags:
+        - Datasets
+      responses:
+        200:
+          description: Dataset deleted
+          content:
+            application/json:
+              schema:
+                type: string
+                format: uuid
+        401:
+          description: Unauthorized
+        404:
+          description: Dataset not found
+  /people:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - People
+      summary: Find all people
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PersonSelect'
+        401:
+          description: Unauthorized
+  /people/{id}:
+    parameters:
+      - name: id
+        in: path
+        description: ID of the person
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - People
+      summary: Find person by ID
+      responses:
+        200:
+          description: Person found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PersonSelect'
+        401:
+          description: Unauthorized
+        404:
+          description: Person not found
+  /organizations:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - Organizations
+      summary: Find all organizations
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrganizationSelect'
+        401:
+          description: Unauthorized
+  /organizations/{id}:
+    parameters:
+      - name: id
+        in: path
+        description: ID of the organization
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - Organizations
+      summary: Find organization by ID
+      responses:
+        200:
+          description: Organization found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationSelect'
+        401:
+          description: Unauthorized
+        404:
+          description: Organization not found
+  /app-title:
+    get:
+      tags:
+        - General
+      summary: Get App Title
+      responses:
+        200:
+          description: App Title found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppTitleSelect'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  requestBodies:
+    DatasetRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DatasetInsert'
+    PersonRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PersonInsert'
+    OrganizationRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrganizationInsert'
+    LoginRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Login'
+    LoginRefreshRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LoginRefresh'
+  schemas:
+    Login:
+      type: object
+      required:
+        - id
+        - password
+      properties:
+        id:
+          type: string
+        password:
+          type: string
+    LoginSelect:
+      type: object
+      required:
+        - username
+        - accessToken
+        - refreshToken
+      properties:
+        username:
+          type: string
+        firstname:
+          type: string
+        lastname:
+          type: string
+        roles:
+          type: array
+          items:
+            type: string
+            enum: ['AUTHOR']
+        accessToken:
+          type: string
+          description: base64 encoded jwt token
+        refreshToken:
+          type: string
+          description: base64 encoded jwt token
+    LoginRefresh:
+      type: object
+      required:
+        - id
+        - refreshToken
+      properties:
+        id:
+          type: string
+        refreshToken:
+          type: string
+    LoginRefreshSelect:
+      type: object
+      required:
+        - accessToken
+      properties:
+        accessToken:
+          type: string
+          description: base64 encoded jwt token
+    Dataset:
+      type: object
+      required:
+        - name
+        - abstract
+        - isPublished
+        - isPublic
+        - version
+      properties:
+        name:
+          description: The name of the Dataset.
+          type: string
+        abstract:
+          description: An abstract is a short description that summarizes a Dataset.
+          type: string
+        description:
+          description: A detailed description of the Dataset.
+          type: string
+        url:
+          description: The URL of the Dataset. This generally corresponds to the Web page for the Dataset.
+          type: string
+          format: uri
+        licenses:
+          description: A detailed description of the license conditions, including specific rights of use, restrictions and conditions for further processing.
+          type: array
+          items:
+            type: string
+        conditionsOfAccess:
+          description: Defines specific access requirements, e.g. only for registered users, only for academic research or only after approval by an ethics committee, the data records come from a database behind a paywall, etc.
+          type: string
+        dateCreated:
+          description: The date the Dataset was initially created.
+          type: string
+          format: date-time
+        dateModified:
+          description: The date the Dataset was last modified.
+          type: string
+          format: date-time
+        datePublished:
+          description: The date the Dataset was published.
+          type: string
+          format: date-time
+        isPublished:
+          description: States whether a Dataset has been published.
+          type: boolean
+        isPublic:
+          description: States whether a Dataset is publicly or only internally visible.
+          type: boolean
+        keywords:
+          description: A set of keywords associated with the Dataset, either as free text, or a DefinedTerm with a formal definition.
+          type: array
+          items:
+            type: string
+        isBasedOnUrls:
+          description: A resource from which this Dataset is derived or from which it is a modification or adaptation.
+          type: array
+          items:
+            type: string
+            format: uri
+        isBasedOnIds:
+          description: Another Dataset from which this Dataset is derived or from which it is a modification or adaptation.
+          type: array
+          items:
+            type: string
+            format: uuid
+        version:
+          description: "The version of the Dataset. The recommended versioning scheme to use for Datasets is `MAJOR.MINOR.PATCH`, following Semantic Versioning 2.0.0. More specifically: If the `PATCH` version is incremented, the data remains the same, although it might be serialized differently or is packaged using different file formats. If the `MINOR` version is incremented, the existing data is the same and can still be retrieved as it: there might be additional data (e.g. new fields, new RecordSet), or even new records in existing RecordSets, as long as the old recordSets can still be retrieved (eg: the new records are added to a different Split). If the `MAJOR` version is incremented, the existing data has been changed (edited, removed or shuffled records across splits), or extended in a way which doesn't allow for easy access to the data as it was at the previous version."
+          type: string
+        changelog:
+          description: A detailed list of the changes to this version of the Dataset with the reasons for the changes.
+          type: string
+        inLanguages:
+          description: The language(s) of the content of the Dataset.
+          type: array
+          items:
+            type: string
+        sameAs:
+          description: The URL of another Web resource that represents the same Dataset as this one.
+          type: array
+          items:
+            type: string
+            format: uri
+        citeAs:
+          description: A citation to the Dataset itself, or a citation for a publication that describes the Dataset. Ideally, citations should be expressed using the bibtex format.
+          type: string
+        dataSource:
+          description: Specification of the source of the Dataset.
+          type: string
+        dataUsageTerms:
+          description: Specifies the conditions under which the Dataset may be processed, including permitted commercial and non-commercial uses, text and data mining, etc.
+          type: string
+        userRights:
+          description: Specific rights of users using the Dataset, including permission to modify or redistribute Datasets or the obligation to cite the source.
+          type: string
+        dataProcessingTerms:
+          description: Description of the legal basis for the collection of personal data; definition of the legal basis for the provision and further processing of personal data.
+          type: string
+        controllership:
+          description: Determination of controllership. One of "sole controllership" and "joint controllership".
+          type: string
+        jointControllerAgreementConcluded:
+          description: Has a Joint Controller Agreement (JCA) been concluded?
+          type: boolean
+        liabilityClauses:
+          description: Description of the disclaimers and limitations of liability in connection with the use of the data in order to minimize legal risks for the data provider.
+          type: string
+        indemnityClauses:
+          description: Conditions under which the user must indemnify the data provider, including a third-party provider in the event of legal disputes.
+          type: string
+        copyright:
+          description: Provide a detailed description about the copyright of the Datasets content.
+          type: string
+        dataCollection:
+          description: Description of the data collection process.
+          type: string
+        dataCollectionTypes:
+          description: 'Define the data collection type. Recommended values: Surveys, Secondary Data analysis, Physical data collection, Direct measurement, Document analysis, Manual Human Curator, Software Collection, Experiments, Web Scraping, Web API, Focus groups, Self-reporting, Customer feedback data, User-generated content data, Passive Data Collection, Others.'
+          type: array
+          items:
+            type: string
+        dataCollectionMissingData:
+          description: Description of missing data in structured/unstructured form.
+          type: string
+        dataCollectionRawData:
+          description: Description of the raw data i.e. source of the data.
+          type: string
+        dataCollectionTimeframes:
+          description: Timeframe in terms of start and end date of the collection process.
+          type: array
+          items:
+            type: string
+            format: date-time
+        dataImputationProtocol:
+          description: Description of data imputation process if applicable.
+          type: string
+        dataManipulationProtocol:
+          description: Description of data manipulation process if applicable.
+          type: string
+        dataAnonymizationProtocol:
+          description: Description of the anonymization procedures used to protect the identity of individuals in the data.
+          type: string
+        dataPreprocessingProtocols:
+          description: Description of the steps that were required to bring collected data to a state that can be processed by an ML model/algorithm, e.g. filtering out incomplete entries etc.
+          type: array
+          items:
+            type: string
+        dataSecurityProtocol:
+          description: Description of the security measures taken to protect the data, including encryption, access controls and measures to ensure data integrity, including specific safeguards for different types of personal data including sensitive data (e.g. health data, sexual orientation).
+          type: string
+        dataAnnotationProtocol:
+          description: Description of annotations (labels, ratings) produced, including how these were created or authored - Annotation Workforce Type, Annotation Characteristic(s), Annotation Description(s), Annotation Task(s), Annotation Distribution(s).
+          type: string
+        dataAnnotationPlatforms:
+          description: Platform, tool, or library used to collect annotations by human annotators.
+          type: array
+          items:
+            type: string
+        dataAnnotationAnalyses:
+          description: Considerations related to the process of converting the "raw" annotations into the labels that are ultimately packaged in a Dataset - Uncertainty or disagreement between annotations on each instance as a signal in the Dataset, analysis of systematic disagreements between annotators of different socio demographic group, how the final Dataset annotations will relate to individual annotator responses.
+          type: array
+          items:
+            type: string
+        dataReleaseMaintenancePlans:
+          description: Versioning information in terms of the updating timeframe, the maintainers, and the deprecation policies.
+          type: array
+          items:
+            type: string
+        personalSensitiveInformations:
+          description: Sensitive Human Attribute(s) - Gender, Socio-economic status, Geography, Language, Age, Culture, Experience or Seniority, Others (please specify).
+          type: array
+          items:
+            type: string
+        dataProtectionType:
+          description: Determining whether the data is anonymous/anonymized or personal data. One of "anonymized" and "personal".
+          type: string
+        personalData:
+          description: Description of the categories and types of personal data.
+          type: string
+        dataSocialImpact:
+          description: Discussion of social impact, if applicable.
+          type: string
+        dataBiases:
+          description: Description of biases in Dataset, if applicable.
+          type: array
+          items:
+            type: string
+        dataLimitations:
+          description: Known limitations - Data generalization limits (e.g related to data distribution, data quality issues, or data sources) and on-recommended uses.
+          type: array
+          items:
+            type: string
+        dataUseCases:
+          description: Dataset Use(s) - Training, Testing, Validation, Development or Production Use, Fine Tuning, Others (please specify), Usage Guidelines. Recommended uses.
+          type: array
+          items:
+            type: string
+        annotationsPerItem:
+          description: Number of human labels per Dataset item.
+          type: string
+        annotatorDemographics:
+          description: List of demographics specifications about the annotators.
+          type: array
+          items:
+            type: string
+        machineAnnotationTools:
+          description: List of software used for data annotation (e.g. concept extraction, NER, and additional characteristics of the tools used for annotation to allow for replication or extension).
+          type: array
+          items:
+            type: string
+    DatasetInsert:
+      allOf:
+        - $ref: '#/components/schemas/Dataset'
+        - type: object
+          properties:
+            creatorPersonIds:
+              description: The Person/People that created the Dataset.
+              type: array
+              items:
+                type: string
+                format: uuid
+            creatorOrganizationIds:
+              description: The Organization(s) that created the Dataset.
+              type: array
+              items:
+                type: string
+                format: uuid
+            publisherPersonIds:
+              description: The Person/People that published the Dataset.
+              type: array
+              items:
+                type: string
+                format: uuid
+            publisherOrganizationIds:
+              description: The Organization(s) that published the Dataset.
+              type: array
+              items:
+                type: string
+                format: uuid
+            distributions:
+              description: A downloadable form of this Dataset, at a specific location, in a specific format. This property can be repeated if different variations are available. There is no expectation that different downloadable distributions must contain exactly equivalent information (see also DCAT on this point). Different distributions might include or exclude different subsets of the entire Dataset, for example. Please provide reference Ids for FileObjects or FileSets.
+              type: array
+              items:
+                oneOf:
+                  - $ref: '#/components/schemas/FileObjectInsert'
+                  - $ref: '#/components/schemas/FileSetInsert'
+            recordSets:
+              description: A RecordSet describes a set of structured records obtained from one or more data sources (typically a file or set of files) and the structure of these records, expressed as a set of fields (e.g., the columns of a table). A RecordSet can represent flat or nested data.
+              type: array
+              items:
+                $ref: '#/components/schemas/RecordSetInsert'
+    DatasetSelect:
+      allOf:
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              type: string
+              format: uuid
+        - $ref: '#/components/schemas/Dataset'
+        - type: object
+          properties:
+            creatorPeople:
+              description: The Person/People that created the Dataset.
+              type: array
+              items:
+                $ref: '#/components/schemas/PersonSelect'
+            creatorOrganizations:
+              description: The Organization(s) that created the Dataset.
+              type: array
+              items:
+                $ref: '#/components/schemas/OrganizationSelect'
+            publisherPeople:
+              description: The Person/People that published the Dataset.
+              type: array
+              items:
+                $ref: '#/components/schemas/PersonSelect'
+            publisherOrganizations:
+              description: The Organization(s) that published the Dataset.
+              type: array
+              items:
+                $ref: '#/components/schemas/OrganizationSelect'
+            distributions:
+              description: A downloadable form of this Dataset, at a specific location, in a specific format. This property can be repeated if different variations are available. There is no expectation that different downloadable distributions must contain exactly equivalent information (see also DCAT on this point). Different distributions might include or exclude different subsets of the entire Dataset, for example.
+              type: array
+              items:
+                oneOf:
+                  - $ref: '#/components/schemas/FileObjectSelect'
+                  - $ref: '#/components/schemas/FileSetSelect'
+            recordSets:
+              description: A RecordSet describes a set of structured records obtained from one or more data sources (typically a file or set of files) and the structure of these records, expressed as a set of fields (e.g., the columns of a table). A RecordSet can represent flat or nested data.
+              type: array
+              items:
+                $ref: '#/components/schemas/RecordSetSelect'
+    File:
+      required:
+        - distributionType
+        - name
+      type: object
+      properties:
+        distributionType:
+          description: The type of the distribution. One of "fileObject" and "fileSet".
+          type: string
+        name:
+          description: The name of the file. As much as possible, the name should reflect the name of the file as downloaded, including the file extension. e.g. "images.zip".
+          type: string
+        contentUrl:
+          description: Actual bytes of the media object, for example the image file or video file.
+          type: string
+        contentSize:
+          description: File size in (mega/kilo/...)bytes. Defaults to bytes if a unit is not specified.
+          type: string
+        encodingFormat:
+          description: The format of the file, given as a mime type.
+          type: string
+        sameAs:
+          description: URL (or local name) of a FileObject/FileSet with the same content, but in a different format.
+          type: array
+          items:
+            type: string
+            format: uri
+        description:
+          description: A description of how to get the file.
+          type: string
+        sha256:
+          description: Checksum for the file contents.
+          type: string
+    FileObjectInsert:
+      allOf:
+        - $ref: '#/components/schemas/File'
+        - type: object
+          properties:
+            containedIn:
+              description: Another FileObject or FileSet that this one is contained in, e.g., in the case of a file extracted from an archive. When this property is present, the contentUrl is evaluated as a relative path within the container object.
+              type: array
+              items:
+                type: string
+    FileObjectSelect:
+      allOf:
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              type: string
+              format: uuid
+        - $ref: '#/components/schemas/FileObjectInsert'
+    FileSetInsert:
+      allOf:
+        - $ref: '#/components/schemas/File'
+        - type: object
+          properties:
+            containedIn:
+              description: The source of data for the FileSet, e.g., an archive. If multiple values are provided for containedIn, then the union of their contents is taken (e.g., this can be used to combine files from multiple archives).
+              type: array
+              items:
+                type: string
+            includes:
+              description: A glob pattern that specifies the files to include.
+              type: array
+              items:
+                type: string
+            excludes:
+              description: A glob pattern that specifies the files to exclude.
+              type: array
+              items:
+                type: string
+    FileSetSelect:
+      allOf:
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              type: string
+              format: uuid
+        - $ref: '#/components/schemas/FileSetInsert'
+    RecordSet:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          description: The name of the RecordSet.
+          type: string
+        description:
+          description: A description of the RecordSet.
+          type: string
+        keys:
+          description: One or more fields whose values uniquely identify each record in the RecordSet.
+          type: array
+          items:
+            type: string
+    RecordSetInsert:
+      allOf:
+        - $ref: '#/components/schemas/RecordSet'
+        - type: object
+          properties:
+            fields:
+              description: A data element that appears in the records of the RecordSet (e.g., one column of a table).
+              type: array
+              items:
+                $ref: '#/components/schemas/FieldInsert'
+    RecordSetSelect:
+      allOf:
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              type: string
+              format: uuid
+        - $ref: '#/components/schemas/RecordSet'
+        - type: object
+          properties:
+            fields:
+              description: A data element that appears in the records of the RecordSet (e.g., one column of a table).
+              type: array
+              items:
+                $ref: '#/components/schemas/FieldSelect'
+    FieldInsert:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          description: The name of the field.
+          type: string
+        description:
+          description: A description of the field.
+          type: string
+        source:
+          description: The data source of the field. This will generally reference a FileObject or FileSet's contents (e.g., a specific column of a table).
+          type: object
+          properties:
+            fileObject:
+              description: The name of the referenced FileObject source of the data.
+              type: string
+            fileSet:
+              description: The name of the referenced FileSet source of the data.
+              type: string
+            recordSet:
+              description: The name of the referenced RecordSet source.
+              type: string
+            extract:
+              description: The extraction method from the provided source.
+              type: object
+              properties:
+                fileProperty:
+                  description: The corresponding property for the FileObject. One of "fullpath", "filename", "content", "lines" and "lineNumbers".
+                  type: string
+                column:
+                  description: A column name.
+                  type: string
+        dataTypes:
+          description: The data type of the field, identified by the URI of the corresponding class. It could be either an atomic type (e.g, sc:Integer) or a semantic type (e.g., sc:GeoLocation).
+          type: array
+          items:
+            type: string
+    FieldSelect:
+      allOf:
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              type: string
+              format: uuid
+        - $ref: '#/components/schemas/FieldInsert'
+    Person:
+      type: object
+      required:
+        - name
+        - familyName
+        - address
+        - email
+        - telephone
+      properties:
+        name:
+          description: The first name of the Person.
+          type: string
+        familyName:
+          description: The last name of the Person.
+          type: string
+        address:
+          description: The postal address of the Person.
+          type: string
+        email:
+          description: The email address of the Person.
+          type: string
+        telephone:
+          description: The telephone number of the Person.
+          type: string
+    PersonInsert:
+      allOf:
+        - $ref: '#/components/schemas/Person'
+    PersonSelect:
+      allOf:
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              type: string
+              format: uuid
+        - $ref: '#/components/schemas/Person'
+    Organization:
+      type: object
+      required:
+        - name
+        - address
+        - email
+        - telephone
+      properties:
+        name:
+          description: The name of the Organization.
+          type: string
+        address:
+          description: The postal address of the Organization.
+          type: string
+        email:
+          description: The representative email address of the Organization.
+          type: string
+        telephone:
+          description: The contact telephone number of the Organization.
+          type: string
+    OrganizationInsert:
+      allOf:
+        - $ref: '#/components/schemas/Organization'
+    OrganizationSelect:
+      allOf:
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              type: string
+              format: uuid
+        - $ref: '#/components/schemas/Organization'
+    AppTitleSelect:
+      type: string

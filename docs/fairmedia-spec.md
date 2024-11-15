@@ -230,10 +230,10 @@
     <td>Determination of controllership.</td>
   </tr>
   <tr>
-    <td>fm:jointControllershipAgreementConcluded</td>
+    <td>fm:jointControllerAgreementConcluded</td>
     <td><a href="https://schema.org/Boolean">sc:Boolean</a></td>
     <td>ONE</td>
-    <td>Has a joint controllership agreement been concluded?</td>
+    <td>Has a Joint Controller Agreement (JCA) been concluded?</td>
   </tr>
   <tr>
     <td>fm:liabilityClauses</td>

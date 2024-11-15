@@ -66,9 +66,9 @@ fair:controllership a rdf:Property ;
   schema:domainIncludes schema:Dataset ;
   schema:rangeIncludes fair:ControllershipEnumeration .
 
-fair:jointControllershipAgreementConcluded a rdf:Property ;
-  rdfs:label "jointControllershipAgreementConcluded" ;
-  rdfs:comment "Has a joint controllership agreement been concluded?" ;
+fair:jointControllerAgreementConcluded a rdf:Property ;
+  rdfs:label "jointControllerAgreementConcluded" ;
+  rdfs:comment "Has a Joint Controller Agreement (JCA) been concluded?" ;
   schema:domainIncludes schema:Dataset ;
   schema:rangeIncludes schema:Boolean .
 
