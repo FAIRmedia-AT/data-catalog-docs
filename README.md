@@ -8,18 +8,28 @@
 
 ## Usage
 
-<img src="docs/fairmedia-dataset-lifecycle.drawio.svg" width="100%">
+When the FairMedia Dataset Catalog is opened, you are first greeted with the start page. It currently displays all public datasets in a list. You can open these and view more detailed information about them. The detail page is divided into several tabs (General, Terms & Liabilities, Responsible AI, Distributions and Record Sets) to display the information more clearly.
 
-## Architektur
+To access further information, you have to log in. You will then see a list of all datasets created and another button next to the login button to create datasets.
+
+<img src="docs/fairmedia-dataset-lifecycle.drawio.svg" alt="Dataset Lifecycle" width="100%">
+
+Datasets have a lifecycle, which is visualized in the graphic above. After the dataset has been created, it is in draft mode. These datasets can be edited and deleted at any time. However, they are not displayed to people who are not logged in, as they are not publicly available. If you believe that the first version of the dataset is ready, you can publish it. In this mode, it can no longer be edited or deleted. You can only set the visibility (whether it is only visible internally or also publicly) and create a new version of the dataset. This is then back in draft mode and can be edited.
+
+When editing or creating a dataset, you will find the same tabs as in the detail view. The individual form fields are provided with a small help text that offers further information about what should be entered in the respective field. The aim is to describe existing datasets as precisely as possible in order to make it easier for others who may want to use the dataset to decide whether it meets their requirements.
+
+## Architecture
 
 Der FairMedia Dataset Catalog besteht aus verschiedenen Komponenten und ist folgendermaßen aufgebaut. Zunächst gibt es das Backend, welches auf einem Server läuft und von der API Anfragen empfängt. Über diese API kann ein Partner Datasets anlegen, bearbeiten und löschen. Außerdem kann eine Liste aller Datasets oder aller öffetnlichen Datasets angefragt werden, oder alle Details zu einem spezifischen Dataset. Diese API Endpunkte sind mit einer Authentifizierung versehen, sodass Operationen an einem dataset nur mit der richtigen Authorisierung erfolgen können. Öffentliche Datasets können jedoch über einen eigenen API Enpunkt immer angefragt werden. Bisher wird unterschieden zwischen einem nicht eingeloggten User und einem eingeloggten User. Als nicht eingelggter User kann man alle öffentlichen datasets einsehen. Als eingeloggter User kann man alle Datasets der Organization einsehen, Datasets erstellen, bearbeiten und löschen.
 Darüber hinaus greift das Backend auf die Datenbank zu.
 
 <img src="docs/fairmedia-c4-diagram.drawio.svg" width="100%">
 
+// TODO: Describe Architecture
+
 ## Schema
 
-Das FairMedia Schema basiert auf dem Dataset Vokabular von schema.org, der Croissant Spezifikation inklusive der Croissant RAI (Responsible AI) Spezifikation und erweitert diese um einige weitere Eigenschaften. Dabei wurden vor Allem rechtliche Informationen hinzugefügt.
+The FairMedia schema is based on the dataset vocabulary of schema.org, the Croissant specification including the Croissant RAI (Responsible AI) specification and extends it with a few additional properties. In particular, legal information has been added.
 
 ### Croissant 🥐 by MLCommons
 
@@ -51,63 +61,63 @@ Currently, Croissant covers only minimal legal information regarding datasets an
 
 ### FairMedia Specification
 
-To address these gaps, we have extended the Croissant specification, resulting in the [FairMedia Specification](docs/fairmedia-spec.md). The following changes and additions were made:
+To address these gaps, we have extended the Croissant specification, resulting in the [FairMedia Specification](docs/fairmedia-spec.md). The following additions were made:
 
 <table>
   <tr>
-    <td>changelog</td>
+    <td><code>changelog</code></td>
     <td>A detailed list of the changes to this version of the dataset with the reasons for the changes.</td>
   </tr>
   <tr>
-    <td>dataSource</td>
+    <td><code>dataSource</code></td>
     <td>Specification of the source of the dataset.</td>
   </tr>
   <tr>
-    <td>dataUsageTerms</td>
+    <td><code>dataUsageTerms</code></td>
     <td>Specifies the conditions under which the data set may be processed, including permitted commercial and non-commercial uses, text and data mining, etc.</td>
   </tr>
   <tr>
-    <td>userRights</td>
+    <td><code>userRights</code></td>
     <td>Specific rights of users using the dataset, including permission to modify or redistribute datasets or the obligation to cite the source.</td>
   </tr>
   <tr>
-    <td>dataProcessingTerms</td>
+    <td><code>dataProcessingTerms</code></td>
     <td>Description of the legal basis for the collection of personal data; definition of the legal basis for the provision and further processing of personal data.</td>
   </tr>
   <tr>
-    <td>controllership</td>
+    <td><code>controllership</code></td>
     <td>Determination of controllership.</td>
   </tr>
   <tr>
-    <td>jointControllerAgreementConcluded</td>
+    <td><code>jointControllerAgreementConcluded</code></td>
     <td>Has a Joint Controller Agreement (JCA) been concluded?</td>
   </tr>
   <tr>
-    <td>liabilityClauses</td>
+    <td><code>liabilityClauses</code></td>
     <td>Description of the disclaimers and limitations of liability in connection with the use of the data in order to minimize legal risks for the data provider.</td>
   </tr>
   <tr>
-    <td>indemnityClauses</td>
+    <td><code>indemnityClauses</code></td>
     <td>Conditions under which the user must indemnify the data provider, including a third-party provider in the event of legal disputes.</td>
   </tr>
   <tr>
-    <td>copyright</td>
+    <td><code>copyright</code></td>
     <td>Provide a detailed description about the copyright of the datasets content.</td>
   </tr>
   <tr>
-    <td>dataAnonymizationProtocol</td>
+    <td><code>dataAnonymizationProtocol</code></td>
     <td>Description of the anonymization procedures used to protect the identity of individuals in the data.</td>
   </tr>
   <tr>
-    <td>dataSecurityProtocol</td>
+    <td><code>dataSecurityProtocol</code></td>
     <td>Description of the security measures taken to protect the data, including encryption, access controls and measures to ensure data integrity, including specific safeguards for different types of personal data including sensitive data (e.g. health data, sexual orientation).</td>
   </tr>
   <tr>
-    <td>dataProtectionType</td>
+    <td><code>dataProtectionType</code></td>
     <td>Determining whether the data is anonymous/anonymized or personal data.</td>
   </tr>
   <tr>
-    <td>personalData</td>
+    <td><code>personalData</code></td>
     <td>Description of the categories and types of personal data.</td>
   </tr>
 </table>
