@@ -20,12 +20,11 @@ When editing or creating a dataset, you will find the same tabs as in the detail
 
 ## Architecture
 
-Der FairMedia Dataset Catalog besteht aus verschiedenen Komponenten und ist folgendermaßen aufgebaut. Zunächst gibt es das Backend, welches auf einem Server läuft und von der API Anfragen empfängt. Über diese API kann ein Partner Datasets anlegen, bearbeiten und löschen. Außerdem kann eine Liste aller Datasets oder aller öffetnlichen Datasets angefragt werden, oder alle Details zu einem spezifischen Dataset. Diese API Endpunkte sind mit einer Authentifizierung versehen, sodass Operationen an einem dataset nur mit der richtigen Authorisierung erfolgen können. Öffentliche Datasets können jedoch über einen eigenen API Enpunkt immer angefragt werden. Bisher wird unterschieden zwischen einem nicht eingeloggten User und einem eingeloggten User. Als nicht eingelggter User kann man alle öffentlichen datasets einsehen. Als eingeloggter User kann man alle Datasets der Organization einsehen, Datasets erstellen, bearbeiten und löschen.
-Darüber hinaus greift das Backend auf die Datenbank zu.
+<img src="docs/fairmedia-c4-diagram.drawio.svg" alt="C4 Diagram FairMedia Dataset Catalog" width="100%">
 
-<img src="docs/fairmedia-c4-diagram.drawio.svg" width="100%">
+The FairMedia Dataset Catalog provides two interfaces to the outside world. On the one hand, there is an API interface that provides various endpoints for managing datasets (for more detailed information, see [OpenAPI](docs/openapi.yaml)). For example, partners can extend their own software and access the FairMedia Dataset Catalog directly from there. On the other hand, a front end is also provided, which can be used to manage datasets easily with a user interface. This also outputs JSON-LD, which releases linked data and can be found by crawlers. This linked data is structured according to the [FairMedia Specification](docs/fairmedia-spec.md).
 
-// TODO: Describe Architecture
+Internally, everything is managed by a backend, which takes care of the API requests and has access to the database.
 
 ## Schema
 
