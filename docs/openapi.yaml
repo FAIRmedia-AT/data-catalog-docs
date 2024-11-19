@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: FairMedia API
   summary: The FairMedia API provides methods to describe and manage datasets
-  description: The FairMedia API is a datacatalog that provides methods to describe and manage datasets
+  description: The FairMedia API is a data catalog that provides methods to describe and manage datasets
   version: 1.0.0
 servers:
   - url: http://localhost:3000

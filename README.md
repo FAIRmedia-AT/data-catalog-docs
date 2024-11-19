@@ -1,6 +1,6 @@
 <img src="assets/fairmedia-logo.png" width="30%">
 
-# FairMedia Dataset Catalog Documentation
+# FairMedia Data Catalog Documentation
 
 - [Specification](docs/fairmedia-spec.md)
 - [Ontology](docs/fairmedia-ontology.ttl)
@@ -8,7 +8,7 @@
 
 ## Usage
 
-When the FairMedia Dataset Catalog is opened, you are first greeted with the start page. It currently displays all public datasets in a list. You can open these and view more detailed information about them. The detail page is divided into several tabs (General, Terms & Liabilities, Responsible AI, Distributions and Record Sets) to display the information more clearly.
+When the FairMedia Data Catalog is opened, you are first greeted with the start page. It currently displays all public datasets in a list. You can open these and view more detailed information about them. The detail page is divided into several tabs (General, Terms & Liabilities, Responsible AI, Distributions and Record Sets) to display the information more clearly.
 
 To access further information, you have to log in. You will then see a list of all datasets created and another button next to the login button to create datasets.
 
@@ -20,9 +20,9 @@ When editing or creating a dataset, you will find the same tabs as in the detail
 
 ## Architecture
 
-<img src="docs/fairmedia-c4-diagram.drawio.svg" alt="C4 Diagram FairMedia Dataset Catalog" width="100%">
+<img src="docs/fairmedia-c4-diagram.drawio.svg" alt="C4 Diagram FairMedia Data Catalog" width="100%">
 
-The FairMedia Dataset Catalog provides two interfaces to the outside world. On the one hand, there is an API interface that provides various endpoints for managing datasets (for more detailed information, see [OpenAPI](docs/openapi.yaml)). For example, partners can extend their own software and access the FairMedia Dataset Catalog directly from there. On the other hand, a front end is also provided, which can be used to manage datasets easily with a user interface. This also outputs JSON-LD, which releases linked data and can be found by crawlers. This linked data is structured according to the [FairMedia Specification](docs/fairmedia-spec.md).
+The FairMedia Data Catalog provides two interfaces to the outside world. On the one hand, there is an API interface that provides various endpoints for managing datasets (for more detailed information, see [OpenAPI](docs/openapi.yaml)). For example, partners can extend their own software and access the FairMedia Data Catalog directly from there. On the other hand, a frontend is also provided, which can be used to manage datasets easily with a user interface. This also outputs JSON-LD, which releases linked data and can be found by crawlers. This linked data is structured according to the [FairMedia Specification](docs/fairmedia-spec.md).
 
 Internally, everything is managed by a backend, which takes care of the API requests and has access to the database.
 
@@ -41,9 +41,9 @@ Croissant by [MLCommons](https://mlcommons.org) is a high-level format designed 
 
 The primary aim of Croissant is to establish a standard dataset format that simplifies the process of finding and utilizing ML datasets. Additionally, it facilitates the development of tools that assist in the creation, understanding, and enhancement of ML datasets.
 
-Croissant leverages schema.org and its Dataset vocabulary to improve dataset discoverability. It is already integrated into popular platforms such as Google Dataset Search, Kaggle, OpenML, Hugging Face and TensorFlow Datasets.
+Croissant leverages schema.org and its `Dataset` vocabulary to improve dataset discoverability. It is already integrated into popular platforms such as Google Dataset Search, Kaggle, OpenML, Hugging Face and TensorFlow Datasets.
 
-In our FairMedia dataset catalog, we utilize Croissant to provide datasets that come with comprehensive descriptions and are presented in a consistent and standardized format.
+In our FairMedia Data Catalog, we utilize Croissant to provide datasets that come with comprehensive descriptions and are presented in a consistent and standardized format.
 
 You can find more information about Croissant on the [official website](https://mlcommons.org/croissant) and on the [GitHub repository](https://github.com/mlcommons/croissant).
 
@@ -51,7 +51,7 @@ You can find more information about Croissant on the [official website](https://
 
 Currently, Croissant covers only minimal legal information regarding datasets and is missing some other information that may be relevant. The following key aspects are missing:
 
-- **Copyrights**: Details on the dataset’s copyrights and whether they are clearly resolved
+- **Copyrights**: Details on the datasets copyrights and whether they are clearly resolved
 - **Controllerships**: Information on joint or individual controllerships related to the dataset
 - **Usage Rights**: Specifications on the rights to use the dataset
 - **Data Anonymization**: Methods used for data anonymization, measures taken to protect the data and identification of personal data included in the dataset
