@@ -130,6 +130,9 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/DatasetSelect'
+            application/ld+json:
+              schema:
+                type: object
         401:
           description: Unauthorized
     post:
@@ -173,6 +176,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DatasetSelect'
+            application/ld+json:
+              schema:
+                type: object
         401:
           description: Unauthorized
         404:
