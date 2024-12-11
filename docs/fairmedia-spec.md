@@ -1,5 +1,7 @@
 # FairMedia Specification
 
+Version 1.1.0
+
 ## Prerequisites
 
 ### Namespaces
@@ -202,7 +204,7 @@
   <tr>
     <td>fm:dataSource</td>
     <td><a href="https://schema.org/Text">sc:Text</a></td>
-    <td>ONE</td>
+    <td>MANY</td>
     <td>Specification of the source of the dataset.</td>
   </tr>
   <tr>
