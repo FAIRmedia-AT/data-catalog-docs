@@ -306,7 +306,7 @@ paths:
           description: Unauthorized
         404:
           description: Organization not found
-  /app-title:
+  /app/title:
     get:
       tags:
         - App
