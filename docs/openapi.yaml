@@ -318,6 +318,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AppTitleSelect'
+  /app/settings:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - General
+      summary: Get app settings
+      responses:
+        200:
+          description: Settings found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppSettingsSelect'
 
 components:
   securitySchemes:
@@ -947,3 +961,10 @@ components:
         - $ref: '#/components/schemas/Organization'
     AppTitleSelect:
       type: string
+    AppSettingsSelect:
+      type: object
+      properties:
+        crawlerUrls:
+          type: array
+          items:
+            type: string
