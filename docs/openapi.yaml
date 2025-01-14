@@ -331,7 +331,23 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AppSettingsSelect'
+                $ref: '#/components/schemas/AppSettings'
+    put:
+      security:
+        - bearerAuth: []
+      tags:
+        - App
+      requestBody:
+        $ref: '#/components/requestBodies/AppSettingsRequest'
+      responses:
+        200:
+          description: App updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppSettings'
+        401:
+          description: Unauthorized
 
 components:
   securitySchemes:
@@ -365,6 +381,11 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/LoginRefresh'
+    AppSettingsRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AppSettings'
   schemas:
     Login:
       type: object
@@ -959,9 +980,9 @@ components:
               type: string
               format: uuid
         - $ref: '#/components/schemas/Organization'
-    AppTitleSelect:
+    AppTitle:
       type: string
-    AppSettingsSelect:
+    AppSettings:
       type: object
       properties:
         crawlerUrls:
