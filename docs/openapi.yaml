@@ -309,8 +309,8 @@ paths:
   /app-title:
     get:
       tags:
-        - General
-      summary: Get App Title
+        - App
+      summary: Get app title
       responses:
         200:
           description: App Title found
@@ -323,7 +323,7 @@ paths:
       security:
         - bearerAuth: []
       tags:
-        - General
+        - App
       summary: Get app settings
       responses:
         200:
