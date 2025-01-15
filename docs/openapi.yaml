@@ -773,6 +773,9 @@ components:
         - $ref: '#/components/schemas/DatasetSelectProperties'
     DatasetFromLDs:
       type: object
+      required:
+        - url
+        - dataset
       properties:
         url:
           type: string
