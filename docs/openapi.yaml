@@ -106,7 +106,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DatasetSelect'
+                $ref: '#/components/schemas/DatasetFromLD'
             application/ld+json:
               schema:
                 type: object
@@ -133,12 +133,7 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    url:
-                      type: string
-                    dataset:
-                      $ref: '#/components/schemas/DatasetSelect'
+                  $ref: '#/components/schemas/DatasetFromLDs'
             application/ld+json:
               schema:
                 type: object
@@ -469,7 +464,7 @@ components:
         accessToken:
           type: string
           description: base64 encoded jwt token
-    Dataset:
+    DatasetBase:
       type: object
       required:
         - name
@@ -528,12 +523,6 @@ components:
           items:
             type: string
             format: uri
-        isBasedOnIds:
-          description: Another Dataset from which this Dataset is derived or from which it is a modification or adaptation.
-          type: array
-          items:
-            type: string
-            format: uuid
         version:
           description: "The version of the Dataset. The recommended versioning scheme to use for Datasets is `MAJOR.MINOR.PATCH`, following Semantic Versioning 2.0.0. More specifically: If the `PATCH` version is incremented, the data remains the same, although it might be serialized differently or is packaged using different file formats. If the `MINOR` version is incremented, the existing data is the same and can still be retrieved as it: there might be additional data (e.g. new fields, new RecordSet), or even new records in existing RecordSets, as long as the old recordSets can still be retrieved (eg: the new records are added to a different Split). If the `MAJOR` version is incremented, the existing data has been changed (edited, removed or shuffled records across splits), or extended in a way which doesn't allow for easy access to the data as it was at the previous version."
           type: string
@@ -680,9 +669,54 @@ components:
           type: array
           items:
             type: string
+    DatasetIsBasedOnIds:
+      type: object
+      properties:
+        isBasedOnIds:
+          description: Another Dataset from which this Dataset is derived or from which it is a modification or adaptation.
+          type: array
+          items:
+            type: string
+            format: uuid
+    DatasetSelectProperties:
+      type: object
+      properties:
+        creatorPeople:
+          description: The Person/People that created the Dataset.
+          type: array
+          items:
+            $ref: '#/components/schemas/PersonSelect'
+        creatorOrganizations:
+          description: The Organization(s) that created the Dataset.
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationSelect'
+        publisherPeople:
+          description: The Person/People that published the Dataset.
+          type: array
+          items:
+            $ref: '#/components/schemas/PersonSelect'
+        publisherOrganizations:
+          description: The Organization(s) that published the Dataset.
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationSelect'
+        distributions:
+          description: A downloadable form of this Dataset, at a specific location, in a specific format. This property can be repeated if different variations are available. There is no expectation that different downloadable distributions must contain exactly equivalent information (see also DCAT on this point). Different distributions might include or exclude different subsets of the entire Dataset, for example.
+          type: array
+          items:
+            oneOf:
+              - $ref: '#/components/schemas/FileObjectSelect'
+              - $ref: '#/components/schemas/FileSetSelect'
+        recordSets:
+          description: A RecordSet describes a set of structured records obtained from one or more data sources (typically a file or set of files) and the structure of these records, expressed as a set of fields (e.g., the columns of a table). A RecordSet can represent flat or nested data.
+          type: array
+          items:
+            $ref: '#/components/schemas/RecordSetSelect'
     DatasetInsert:
       allOf:
-        - $ref: '#/components/schemas/Dataset'
+        - $ref: '#/components/schemas/DatasetBase'
+        - $ref: '#/components/schemas/DatasetIsBasedOnIds'
         - type: object
           properties:
             creatorPersonIds:
@@ -730,41 +764,20 @@ components:
             id:
               type: string
               format: uuid
-        - $ref: '#/components/schemas/Dataset'
-        - type: object
-          properties:
-            creatorPeople:
-              description: The Person/People that created the Dataset.
-              type: array
-              items:
-                $ref: '#/components/schemas/PersonSelect'
-            creatorOrganizations:
-              description: The Organization(s) that created the Dataset.
-              type: array
-              items:
-                $ref: '#/components/schemas/OrganizationSelect'
-            publisherPeople:
-              description: The Person/People that published the Dataset.
-              type: array
-              items:
-                $ref: '#/components/schemas/PersonSelect'
-            publisherOrganizations:
-              description: The Organization(s) that published the Dataset.
-              type: array
-              items:
-                $ref: '#/components/schemas/OrganizationSelect'
-            distributions:
-              description: A downloadable form of this Dataset, at a specific location, in a specific format. This property can be repeated if different variations are available. There is no expectation that different downloadable distributions must contain exactly equivalent information (see also DCAT on this point). Different distributions might include or exclude different subsets of the entire Dataset, for example.
-              type: array
-              items:
-                oneOf:
-                  - $ref: '#/components/schemas/FileObjectSelect'
-                  - $ref: '#/components/schemas/FileSetSelect'
-            recordSets:
-              description: A RecordSet describes a set of structured records obtained from one or more data sources (typically a file or set of files) and the structure of these records, expressed as a set of fields (e.g., the columns of a table). A RecordSet can represent flat or nested data.
-              type: array
-              items:
-                $ref: '#/components/schemas/RecordSetSelect'
+        - $ref: '#/components/schemas/DatasetBase'
+        - $ref: '#/components/schemas/DatasetIsBasedOnIds'
+        - $ref: '#/components/schemas/DatasetSelectProperties'
+    DatasetFromLD:
+      allOf:
+        - $ref: '#/components/schemas/DatasetBase'
+        - $ref: '#/components/schemas/DatasetSelectProperties'
+    DatasetFromLDs:
+      type: object
+      properties:
+        url:
+          type: string
+        dataset:
+          $ref: '#/components/schemas/DatasetFromLD'
     File:
       required:
         - distributionType
