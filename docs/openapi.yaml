@@ -133,7 +133,12 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/DatasetSelect'
+                  type: object
+                  properties:
+                    url:
+                      type: string
+                    dataset:
+                      $ref: '#/components/schemas/DatasetSelect'
             application/ld+json:
               schema:
                 type: object
