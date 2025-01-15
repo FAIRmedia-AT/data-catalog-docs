@@ -89,7 +89,7 @@ paths:
                 type: object
         404:
           description: Public Dataset not found
-  /datasets/public/getByUrl:
+  /datasets/public/one-from-url:
     parameters:
       - name: url
         in: query
@@ -99,7 +99,7 @@ paths:
     get:
       tags:
         - Public Datasets
-      summary: Find public dataset by Url
+      summary: Find public dataset by url
       responses:
         200:
           description: Public Dataset found
@@ -114,6 +114,31 @@ paths:
           description: No valid url as query parameter provided
         404:
           description: Public Dataset not found
+  /datasets/public/all-from-url:
+    parameters:
+      - name: url
+        in: query
+        description: URL of the datasets
+        schema:
+          type: string
+    get:
+      tags:
+        - Public Datasets
+      summary: Find all public datasets by url
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DatasetSelect'
+            application/ld+json:
+              schema:
+                type: object
+        400:
+          description: No valid url as query parameter provided
   /datasets:
     get:
       security:
