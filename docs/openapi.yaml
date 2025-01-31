@@ -107,9 +107,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DatasetFromLD'
-            application/ld+json:
-              schema:
-                type: object
         400:
           description: No valid url as query parameter provided
         404:
@@ -133,10 +130,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/DatasetFromLDs'
-            application/ld+json:
-              schema:
-                type: object
+                  $ref: '#/components/schemas/DatasetFromLDContainer'
         400:
           description: No valid url as query parameter provided
   /datasets:
@@ -155,9 +149,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/DatasetSelect'
-            application/ld+json:
-              schema:
-                type: object
         401:
           description: Unauthorized
     post:
@@ -201,9 +192,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DatasetSelect'
-            application/ld+json:
-              schema:
-                type: object
         401:
           description: Unauthorized
         404:
@@ -241,6 +229,30 @@ paths:
                 format: uuid
         401:
           description: Unauthorized
+        404:
+          description: Dataset not found
+  /datasets/{id}/url:
+    parameters:
+      - name: id
+        in: path
+        description: ID of the dataset
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - Datasets
+      summary: Get url of the dataset by id
+      responses:
+        200:
+          description: Dataset found
+          content:
+            application/json:
+              schema:
+                type: string
         404:
           description: Dataset not found
   /people:
@@ -356,7 +368,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AppSettings'
+                $ref: '#/components/schemas/AppSettingsSelect'
     put:
       security:
         - bearerAuth: []
@@ -370,9 +382,69 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AppSettings'
+                $ref: '#/components/schemas/AppSettingsSelect'
         401:
           description: Unauthorized
+  /app/access-tokens:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - App
+      summary: Get app access tokens
+      responses:
+        200:
+          description: Access tokens found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AppAccessTokenSelect'
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - App
+      summary: Add new access token
+      requestBody:
+        $ref: '#/components/requestBodies/AppAccessTokenRequest'
+      responses:
+        201:
+          description: Access token created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppAccessTokenSelect'
+        400:
+          description: Bad request
+        401:
+          description: Unauthorized
+  /app/access-tokens/{name}:
+    parameters:
+      - name: name
+        in: path
+        description: Name of the access token
+        required: true
+        schema:
+          type: string
+    delete:
+      security:
+        - bearerAuth: []
+      tags:
+        - App
+      responses:
+        200:
+          description: Access token deleted
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: Unauthorized
+        404:
+          description: Access token not found
+
 
 components:
   securitySchemes:
@@ -400,25 +472,30 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Login'
+            $ref: '#/components/schemas/LoginInsert'
     LoginRefreshRequest:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/LoginRefresh'
+            $ref: '#/components/schemas/LoginRefreshInsert'
     AppSettingsRequest:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/AppSettings'
+            $ref: '#/components/schemas/AppSettingsInsert'
+    AppAccessTokenRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AppAccessTokenInsert'
   schemas:
-    Login:
+    LoginInsert:
       type: object
       required:
-        - id
+        - username
         - password
       properties:
-        id:
+        username:
           type: string
         password:
           type: string
@@ -431,28 +508,19 @@ components:
       properties:
         username:
           type: string
-        firstname:
-          type: string
-        lastname:
-          type: string
-        roles:
-          type: array
-          items:
-            type: string
-            enum: ['AUTHOR']
         accessToken:
           type: string
           description: base64 encoded jwt token
         refreshToken:
           type: string
           description: base64 encoded jwt token
-    LoginRefresh:
+    LoginRefreshInsert:
       type: object
       required:
-        - id
+        - username
         - refreshToken
       properties:
-        id:
+        username:
           type: string
         refreshToken:
           type: string
@@ -494,14 +562,26 @@ components:
         conditionsOfAccess:
           description: Defines specific access requirements, e.g. only for registered users, only for academic research or only after approval by an ethics committee, the data records come from a database behind a paywall, etc.
           type: string
-        dateCreated:
-          description: The date the Dataset was initially created.
-          type: string
-          format: date-time
-        dateModified:
-          description: The date the Dataset was last modified.
-          type: string
-          format: date-time
+        creatorPeople:
+          description: The Person/People that created the Dataset.
+          type: array
+          items:
+            $ref: '#/components/schemas/PersonInsert'
+        creatorOrganizations:
+          description: The Organization(s) that created the Dataset.
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationInsert'
+        publisherPeople:
+          description: The Person/People that published the Dataset.
+          type: array
+          items:
+            $ref: '#/components/schemas/PersonInsert'
+        publisherOrganizations:
+          description: The Organization(s) that published the Dataset.
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationInsert'
         datePublished:
           description: The date the Dataset was published.
           type: string
@@ -510,7 +590,7 @@ components:
           description: States whether a Dataset has been published.
           type: boolean
         isPublic:
-          description: States whether a Dataset is publicly or only internally visible.
+          description: States whether a Dataset is publicly or only privately visible.
           type: boolean
         keywords:
           description: A set of keywords associated with the Dataset, either as free text, or a DefinedTerm with a formal definition.
@@ -560,6 +640,9 @@ components:
         controllership:
           description: Determination of controllership. One of "sole controllership" and "joint controllership".
           type: string
+          enum:
+            - sole controllership
+            - joint controllership
         jointControllerAgreementConcluded:
           description: Has a Joint Controller Agreement (JCA) been concluded?
           type: boolean
@@ -635,6 +718,9 @@ components:
         dataProtectionType:
           description: Determining whether the data is anonymous/anonymized or personal data. One of "anonymized" and "personal".
           type: string
+          enum:
+            - personal
+            - anonymized
         personalData:
           description: Description of the categories and types of personal data.
           type: string
@@ -678,83 +764,40 @@ components:
           items:
             type: string
             format: uuid
-    DatasetSelectProperties:
+    DatasetInsertProperties:
       type: object
       properties:
-        creatorPeople:
-          description: The Person/People that created the Dataset.
-          type: array
-          items:
-            $ref: '#/components/schemas/PersonSelect'
-        creatorOrganizations:
-          description: The Organization(s) that created the Dataset.
-          type: array
-          items:
-            $ref: '#/components/schemas/OrganizationSelect'
-        publisherPeople:
-          description: The Person/People that published the Dataset.
-          type: array
-          items:
-            $ref: '#/components/schemas/PersonSelect'
-        publisherOrganizations:
-          description: The Organization(s) that published the Dataset.
-          type: array
-          items:
-            $ref: '#/components/schemas/OrganizationSelect'
         distributions:
           description: A downloadable form of this Dataset, at a specific location, in a specific format. This property can be repeated if different variations are available. There is no expectation that different downloadable distributions must contain exactly equivalent information (see also DCAT on this point). Different distributions might include or exclude different subsets of the entire Dataset, for example.
           type: array
           items:
             oneOf:
-              - $ref: '#/components/schemas/FileObjectSelect'
-              - $ref: '#/components/schemas/FileSetSelect'
+              - $ref: '#/components/schemas/FileObjectInsert'
+              - $ref: '#/components/schemas/FileSetInsert'
         recordSets:
           description: A RecordSet describes a set of structured records obtained from one or more data sources (typically a file or set of files) and the structure of these records, expressed as a set of fields (e.g., the columns of a table). A RecordSet can represent flat or nested data.
           type: array
           items:
-            $ref: '#/components/schemas/RecordSetSelect'
+            $ref: '#/components/schemas/RecordSetInsert'
+    DatasetDates:
+      type: object
+      required:
+        - dateModified
+        - dateCreated
+      properties:
+        dateCreated:
+          description: The date the Dataset was initially created.
+          type: string
+          format: date-time
+        dateModified:
+          description: The date the Dataset was last modified.
+          type: string
+          format: date-time
     DatasetInsert:
       allOf:
         - $ref: '#/components/schemas/DatasetBase'
         - $ref: '#/components/schemas/DatasetIsBasedOnIds'
-        - type: object
-          properties:
-            creatorPersonIds:
-              description: The Person/People that created the Dataset.
-              type: array
-              items:
-                type: string
-                format: uuid
-            creatorOrganizationIds:
-              description: The Organization(s) that created the Dataset.
-              type: array
-              items:
-                type: string
-                format: uuid
-            publisherPersonIds:
-              description: The Person/People that published the Dataset.
-              type: array
-              items:
-                type: string
-                format: uuid
-            publisherOrganizationIds:
-              description: The Organization(s) that published the Dataset.
-              type: array
-              items:
-                type: string
-                format: uuid
-            distributions:
-              description: A downloadable form of this Dataset, at a specific location, in a specific format. This property can be repeated if different variations are available. There is no expectation that different downloadable distributions must contain exactly equivalent information (see also DCAT on this point). Different distributions might include or exclude different subsets of the entire Dataset, for example. Please provide reference Ids for FileObjects or FileSets.
-              type: array
-              items:
-                oneOf:
-                  - $ref: '#/components/schemas/FileObjectInsert'
-                  - $ref: '#/components/schemas/FileSetInsert'
-            recordSets:
-              description: A RecordSet describes a set of structured records obtained from one or more data sources (typically a file or set of files) and the structure of these records, expressed as a set of fields (e.g., the columns of a table). A RecordSet can represent flat or nested data.
-              type: array
-              items:
-                $ref: '#/components/schemas/RecordSetInsert'
+        - $ref: '#/components/schemas/DatasetInsertProperties'
     DatasetSelect:
       allOf:
         - type: object
@@ -764,20 +807,33 @@ components:
             id:
               type: string
               format: uuid
+            distributions:
+              description: A downloadable form of this Dataset, at a specific location, in a specific format. This property can be repeated if different variations are available. There is no expectation that different downloadable distributions must contain exactly equivalent information (see also DCAT on this point). Different distributions might include or exclude different subsets of the entire Dataset, for example.
+              type: array
+              items:
+                oneOf:
+                  - $ref: '#/components/schemas/FileObjectSelect'
+                  - $ref: '#/components/schemas/FileSetSelect'
+            recordSets:
+              description: A RecordSet describes a set of structured records obtained from one or more data sources (typically a file or set of files) and the structure of these records, expressed as a set of fields (e.g., the columns of a table). A RecordSet can represent flat or nested data.
+              type: array
+              items:
+                $ref: '#/components/schemas/RecordSetSelect'
         - $ref: '#/components/schemas/DatasetBase'
         - $ref: '#/components/schemas/DatasetIsBasedOnIds'
-        - $ref: '#/components/schemas/DatasetSelectProperties'
+        - $ref: '#/components/schemas/DatasetDates'
     DatasetFromLD:
       allOf:
         - $ref: '#/components/schemas/DatasetBase'
-        - $ref: '#/components/schemas/DatasetSelectProperties'
-    DatasetFromLDs:
+        - $ref: '#/components/schemas/DatasetInsertProperties'
+        - $ref: '#/components/schemas/DatasetDates'
+    DatasetFromLDContainer:
       type: object
       required:
-        - url
+        - link
         - dataset
       properties:
-        url:
+        link:
           type: string
         dataset:
           $ref: '#/components/schemas/DatasetFromLD'
@@ -790,6 +846,9 @@ components:
         distributionType:
           description: The type of the distribution. One of "fileObject" and "fileSet".
           type: string
+          enum:
+            - fileObject
+            - fileSet
         name:
           description: The name of the file. As much as possible, the name should reflect the name of the file as downloaded, including the file extension. e.g. "images.zip".
           type: string
@@ -864,7 +923,7 @@ components:
               type: string
               format: uuid
         - $ref: '#/components/schemas/FileSetInsert'
-    RecordSet:
+    RecordSetBase:
       type: object
       required:
         - name
@@ -882,7 +941,7 @@ components:
             type: string
     RecordSetInsert:
       allOf:
-        - $ref: '#/components/schemas/RecordSet'
+        - $ref: '#/components/schemas/RecordSetBase'
         - type: object
           properties:
             fields:
@@ -899,7 +958,7 @@ components:
             id:
               type: string
               format: uuid
-        - $ref: '#/components/schemas/RecordSet'
+        - $ref: '#/components/schemas/RecordSetBase'
         - type: object
           properties:
             fields:
@@ -938,6 +997,12 @@ components:
                 fileProperty:
                   description: The corresponding property for the FileObject. One of "fullpath", "filename", "content", "lines" and "lineNumbers".
                   type: string
+                  enum:
+                    - fullpath
+                    - filename
+                    - content
+                    - lines
+                    - lineNumbers
                 column:
                   description: A column name.
                   type: string
@@ -956,7 +1021,7 @@ components:
               type: string
               format: uuid
         - $ref: '#/components/schemas/FieldInsert'
-    Person:
+    PersonInsert:
       type: object
       required:
         - name
@@ -980,20 +1045,10 @@ components:
         telephone:
           description: The telephone number of the Person.
           type: string
-    PersonInsert:
-      allOf:
-        - $ref: '#/components/schemas/Person'
     PersonSelect:
       allOf:
-        - type: object
-          required:
-            - id
-          properties:
-            id:
-              type: string
-              format: uuid
-        - $ref: '#/components/schemas/Person'
-    Organization:
+        - $ref: '#/components/schemas/PersonInsert'
+    OrganizationInsert:
       type: object
       required:
         - name
@@ -1013,25 +1068,61 @@ components:
         telephone:
           description: The contact telephone number of the Organization.
           type: string
-    OrganizationInsert:
-      allOf:
-        - $ref: '#/components/schemas/Organization'
     OrganizationSelect:
       allOf:
-        - type: object
-          required:
-            - id
-          properties:
-            id:
-              type: string
-              format: uuid
-        - $ref: '#/components/schemas/Organization'
+        - $ref: '#/components/schemas/OrganizationInsert'
     AppTitle:
       type: string
-    AppSettings:
+    AppSettingsInsert:
       type: object
       properties:
-        crawlerUrls:
+        externalSources:
           type: array
           items:
-            type: string
+            type: object
+            required:
+              - name
+              - url
+            properties:
+              name:
+                type: string
+              url:
+                type: string
+        externalAPIs:
+          type: array
+          items:
+            type: object
+            required:
+              - name
+              - url
+              - token
+            properties:
+              name:
+                type: string
+              url:
+                type: string
+              token:
+                type: string
+    AppSettingsSelect:
+      allOf:
+        - $ref: '#/components/schemas/AppSettingsInsert'
+    AppAccessTokenInsert:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+    AppAccessTokenSelect:
+      allOf:
+        - $ref: '#/components/schemas/AppAccessTokenInsert'
+        - type: object
+          required:
+            - token
+            - createdAt
+          properties:
+            token:
+              type: string
+            createdAt:
+              type: string
+              format: date-time
