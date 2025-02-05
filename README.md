@@ -2,9 +2,7 @@
 
 # FairMedia Data Catalog Documentation
 
-- [Specification](docs/fairmedia-spec.md)
-- [Ontology](docs/fairmedia-ontology.ttl)
-- [OpenAPI](docs/openapi.yaml)
+The FairMedia Data Catalog is an application that allows datasets to be described in order to make them accessible to others. These dataset descriptions contain information about the dataset data, how the data was created and also legal information about the use of the dataset. The dataset descriptions can be managed and shared in this application.
 
 ## Usage
 
@@ -22,7 +20,7 @@ When editing or creating a dataset, you will find the same tabs as in the detail
 
 <img src="docs/fairmedia-c4-diagram.drawio.svg" alt="C4 Diagram FairMedia Data Catalog" width="100%">
 
-The FairMedia Data Catalog provides two interfaces to the outside world. On the one hand, there is an API interface that provides various endpoints for managing datasets (for more detailed information, see [OpenAPI](docs/openapi.yaml)). For example, partners can extend their own software and access the FairMedia Data Catalog directly from there. On the other hand, a frontend is also provided, which can be used to manage datasets easily with a user interface. This also outputs JSON-LD, which releases linked data and can be found by crawlers. This linked data is structured according to the [FairMedia Specification](docs/fairmedia-spec.md).
+The FairMedia Data Catalog provides two interfaces to the outside world. On the one hand, there is an API interface that provides various endpoints for managing datasets (for more detailed information, see the [OpenAPI Schema](docs/openapi.yaml)). For example, partners can extend their own software and access the FairMedia Data Catalog directly from there. On the other hand, a frontend is also provided, which can be used to manage datasets easily with a user interface. This also outputs JSON-LD, which releases linked data and can be found by crawlers. This linked data is structured according to the [FairMedia Specification](docs/fairmedia-spec.md).
 
 Internally, everything is managed by a backend, which takes care of the API requests and has access to the database.
 
@@ -115,6 +113,8 @@ To address these gaps, we have extended the Croissant specification, resulting i
     <td>Description of the categories and types of personal data.</td>
   </tr>
 </table>
+
+These changes are documented as RDF in the [FairMedia Ontology](docs/fairmedia-ontology.ttl).
 
 ## Next Steps
 
