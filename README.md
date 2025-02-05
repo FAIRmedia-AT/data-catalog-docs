@@ -2,31 +2,57 @@
 
 # FairMedia Data Catalog Documentation
 
-The FairMedia Data Catalog is an application that allows datasets to be described in order to make them accessible to others. These dataset descriptions contain information about the dataset data, how the data was created and also legal information about the use of the dataset. The dataset descriptions can be managed and shared in this application.
+The FairMedia Data Catalog is an application that allows datasets to be described in order to make them accessible to others.
+These dataset descriptions contain information about the dataset data, how the data was created and also legal information about the use of the dataset.
+The dataset descriptions can be managed and shared in this application.
 
 ## Usage
 
-When the FairMedia Data Catalog is opened, you are first greeted with the start page. It currently displays all public datasets in a list. You can open these and view more detailed information about them. The detail page is divided into several tabs (General, Terms & Liabilities, Responsible AI, Distributions and Record Sets) to display the information more clearly.
+When the FairMedia Data Catalog is opened, you are first greeted with the start page. It currently displays all public datasets in a list.
+You can open these and view more detailed information about them. The detail page is divided into several tabs (General, Terms & Liabilities, Responsible AI, Distributions and Record Sets) to display the information more clearly.
 
 To access further information, you have to log in. You will then see a list of all datasets created and another button next to the login button to create datasets.
 
 <img src="docs/fairmedia-dataset-lifecycle.drawio.svg" alt="Dataset Lifecycle" width="100%">
 
-Datasets have a lifecycle, which is visualized in the graphic above. After the dataset has been created, it is in draft mode. These datasets can be edited and deleted at any time. However, they are not displayed to people who are not logged in, as they are not publicly available. If you believe that the first version of the dataset is ready, you can publish it. In this mode, it can no longer be edited or deleted. You can only set the visibility (whether it is only visible internally or also publicly) and create a new version of the dataset. This is then back in draft mode and can be edited.
+Datasets have a lifecycle, which is visualized in the diagram above.
+After the dataset has been created, it is in draft mode. These datasets can be edited and deleted at any time.
+However, they are not displayed to people who are not logged in, as they are not publicly available.
+If you think that the first version of the dataset is ready, you can publish it. In this mode, it can no longer be edited or deleted.
+You can only set the visibility (whether it is only visible privately or also publicly) and create a new version of the dataset.
+This new version is then a draft and can be edited, deleted and published.
 
-When editing or creating a dataset, you will find the same tabs as in the detail view. The individual form fields are provided with a small help text that offers further information about what should be entered in the respective field. The aim is to describe existing datasets as precisely as possible in order to make it easier for others who may want to use the dataset to decide whether it meets their requirements.
+When editing or creating a dataset, you will find the same tabs as in the detail view.
+The individual form fields are provided with a small help text that offers further information about what should be entered in the respective field.
+The aim is to describe existing datasets as precisely as possible in order to make it easier for others who may want to use the dataset to decide whether it meets their requirements.
+
+Public datasets are shared via Linked Data (JDON-LD) and are therefore accessible to everyone.
+This allows you to integrate public datasets from other data catalogs into your own data catalog.
+Access the settings via the profile menu in the top right (you must be logged in) and add external sources.
+
+Another way to connect external sources is to access the API of another Data Catalog directly.
+To do this, an access token must be generated in the other Data Catalog application via the profile menu.
+You can then add an API access in the settings, where the URL and the access token of the API of the other Data Catalog must be specified.
+
+The externally integrated dataset descriptions are automatically displayed in the list of all datasets and are provided with a special label.
+You only have read access to the datasets integrated via Linked Data, while you also have write access to those integrated via API and can edit, publish and set them to public/private.
 
 ## Architecture
 
 <img src="docs/fairmedia-c4-diagram.drawio.svg" alt="C4 Diagram FairMedia Data Catalog" width="100%">
 
-The FairMedia Data Catalog provides two interfaces to the outside world. On the one hand, there is an API interface that provides various endpoints for managing datasets (for more detailed information, see the [OpenAPI Schema](docs/openapi.yaml)). For example, partners can extend their own software and access the FairMedia Data Catalog directly from there. On the other hand, a frontend is also provided, which can be used to manage datasets easily with a user interface. This also outputs JSON-LD, which releases linked data and can be found by crawlers. This linked data is structured according to the [FairMedia Specification](docs/fairmedia-spec.md).
+The FairMedia Data Catalog provides two interfaces to the outside world.
+On the one hand, there is an API interface that provides various endpoints for managing datasets (for more detailed information, see the [OpenAPI Schema](docs/openapi.yaml)).
+For example, partners can extend their own software and access the FairMedia Data Catalog directly from there.
+On the other hand, a frontend is also provided, which can be used to manage datasets easily with a user interface.
+This also outputs JSON-LD, which releases linked data and can be found by crawlers. This linked data is structured according to the [FairMedia Specification](docs/fairmedia-spec.md).
 
 Internally, everything is managed by a backend, which takes care of the API requests and has access to the database.
 
 ## Schema
 
-The FairMedia schema is based on the dataset vocabulary of schema.org, the Croissant specification including the Croissant RAI (Responsible AI) specification and extends it with a few additional properties. In particular, legal information has been added.
+The FairMedia schema is based on the dataset vocabulary of [schema.org](https://schema.org), the [Croissant specification](https://docs.mlcommons.org/croissant/docs/croissant-spec.html) including the [Croissant RAI](https://docs.mlcommons.org/croissant/docs/croissant-rai-spec.html) (Responsible AI) specification and extends it with a few additional properties.
+In particular, legal information has been added.
 
 ### Croissant 🥐 by MLCommons
 
@@ -37,9 +63,11 @@ Croissant by [MLCommons](https://mlcommons.org) is a high-level format designed 
 - **Structure**: This layer explains how the raw data is assembled and organized into data structures suitable for ML use
 - **ML Semantics**: This details how the data is most commonly used in machine learning contexts
 
-The primary aim of Croissant is to establish a standard dataset format that simplifies the process of finding and utilizing ML datasets. Additionally, it facilitates the development of tools that assist in the creation, understanding, and enhancement of ML datasets.
+The primary aim of Croissant is to establish a standard dataset format that simplifies the process of finding and utilizing ML datasets.
+Additionally, it facilitates the development of tools that assist in the creation, understanding, and enhancement of ML datasets.
 
-Croissant leverages schema.org and its `Dataset` vocabulary to improve dataset discoverability. It is already integrated into popular platforms such as Google Dataset Search, Kaggle, OpenML, Hugging Face and TensorFlow Datasets.
+Croissant leverages schema.org and its `Dataset` vocabulary to improve dataset discoverability.
+It is already integrated into popular platforms such as Google Dataset Search, Kaggle, OpenML, Hugging Face and TensorFlow Datasets.
 
 In our FairMedia Data Catalog, we utilize Croissant to provide datasets that come with comprehensive descriptions and are presented in a consistent and standardized format.
 
@@ -122,4 +150,5 @@ We plan to propose and contribute the FairMedia Specification and its extensions
 
 We also want to improve access management, taking into account that some datasets can be downloaded directly from a URL, some datasets must be requested via a form, and other datasets require a contract to access.
 
-In addition, we want to use the legal information provided to draw clearer conclusions so that users can easily identify the key considerations for using the dataset and understand how to access the dataset. Users could also receive guidance on whether a dataset fits their specific use case.
+In addition, we want to use the legal information provided to draw clearer conclusions so that users can easily identify the key considerations for using the dataset and understand how to access the dataset.
+Users could also receive guidance on whether a dataset fits their specific use case.
