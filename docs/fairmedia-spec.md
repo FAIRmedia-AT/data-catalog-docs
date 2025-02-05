@@ -159,12 +159,13 @@ Version 1.1.0
     </td>
   </tr>
   <tr>
-    <td>fm:changelog</td>
+    <td>sc:releaseNotes</td>
     <td>
-      <a href="https://schema.org/Text">sc:Text</a>
+      <a href="https://schema.org/Text">sc:Text</a> or<br>
+      <a href="https://schema.org/URL">sc:URL</a>
     </td>
     <td>ONE</td>
-    <td>A detailed list of the changes to this version of the dataset with the reasons for the changes.</td>
+    <td>Description of what changed in this version of the dataset with the reasons for the changes.</td>
   </tr>
   <tr>
     <td><a href="https://schema.org/inLanguage">sc:inLanguage</a></td>

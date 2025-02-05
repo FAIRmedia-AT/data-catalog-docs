@@ -606,8 +606,8 @@ components:
         version:
           description: "The version of the Dataset. The recommended versioning scheme to use for Datasets is `MAJOR.MINOR.PATCH`, following Semantic Versioning 2.0.0. More specifically: If the `PATCH` version is incremented, the data remains the same, although it might be serialized differently or is packaged using different file formats. If the `MINOR` version is incremented, the existing data is the same and can still be retrieved as it: there might be additional data (e.g. new fields, new RecordSet), or even new records in existing RecordSets, as long as the old recordSets can still be retrieved (eg: the new records are added to a different Split). If the `MAJOR` version is incremented, the existing data has been changed (edited, removed or shuffled records across splits), or extended in a way which doesn't allow for easy access to the data as it was at the previous version."
           type: string
-        changelog:
-          description: A detailed list of the changes to this version of the Dataset with the reasons for the changes.
+        releaseNotes:
+          description: Description of what changed in this version of the dataset with the reasons for the changes.
           type: string
         inLanguages:
           description: The language(s) of the content of the Dataset.

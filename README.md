@@ -56,17 +56,12 @@ Currently, Croissant covers only minimal legal information regarding datasets an
 - **Usage Rights**: Specifications on the rights to use the dataset
 - **Data Anonymization**: Methods used for data anonymization, measures taken to protect the data and identification of personal data included in the dataset
 - **Access Conditions**: Clarification on the conditions under which the dataset can be accessed
-- **Versioning**: More information about what has changed in the version compared to the old version
 
 ### FairMedia Specification
 
 To address these gaps, we have extended the Croissant specification, resulting in the [FairMedia Specification](docs/fairmedia-spec.md). The following additions were made:
 
 <table>
-  <tr>
-    <td><code>changelog</code></td>
-    <td>A detailed list of the changes to this version of the dataset with the reasons for the changes.</td>
-  </tr>
   <tr>
     <td><code>dataSource</code></td>
     <td>Specification of the source of the dataset.</td>

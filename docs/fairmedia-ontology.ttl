@@ -30,12 +30,6 @@ schema:conditionsOfAccess a rdf:Property ;
   schema:domainIncludes schema:Dataset ;
   schema:rangeIncludes schema:Text .
 
-fair:changelog a rdf:Property ;
-  rdfs:label "changelog" ;
-  rdfs:comment "A detailed list of the changes to this version of the dataset with the reasons for the changes." ;
-  schema:domainIncludes schema:Dataset ;
-  schema:rangeIncludes schema:Text .
-
 fair:dataSource a rdf:Property ;
   rdfs:label "dataSource" ;
   rdfs:comment "Specification of the source of the dataset." ;
