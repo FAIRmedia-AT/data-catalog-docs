@@ -73,7 +73,7 @@ Version 1.1.0
     <td><a href="https://schema.org/license">sc:license</a></td>
     <td><a href="https://schema.org/Text">sc:Text</a></td>
     <td>MANY</td>
-    <td>A detailed description of the license conditions, including specific rights of use, restrictions and conditions for further processing.</td>
+    <td>A detailed description of the license conditions, including specific rights of use, restrictions and conditions for further processing. By contrast with <a href="https://schema.org/license">schema.org/license</a>, the license property must have values of type Text.</td>
   </tr>
   <tr>
     <td><a href="https://schema.org/conditionsOfAccess">sc:conditionsOfAccess</a></td>

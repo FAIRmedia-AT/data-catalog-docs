@@ -24,12 +24,6 @@ schema:license a rdf:Property ;
   schema:domainIncludes schema:Dataset ;
   schema:rangeIncludes schema:Text .
 
-schema:conditionsOfAccess a rdf:Property ;
-  rdfs:label "conditionsOfAccess" ;
-  rdfs:comment "Defines specific access requirements, e.g. only for registered users, only for academic research or only after approval by an ethics committee, the data records come from a database behind a paywall, etc." ;
-  schema:domainIncludes schema:Dataset ;
-  schema:rangeIncludes schema:Text .
-
 fair:dataSource a rdf:Property ;
   rdfs:label "dataSource" ;
   rdfs:comment "Specification of the source of the dataset." ;
