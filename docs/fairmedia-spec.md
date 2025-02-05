@@ -185,8 +185,8 @@ Version 1.1.0
   <tr>
     <td><a href="https://schema.org/distribution">sc:distribution</a></td>
     <td>
-      <a href="https://mlcommons.github.io/croissant/docs/croissant-spec.html#fileobject">cr:FileObject</a> or<br>
-      <a href="https://mlcommons.github.io/croissant/docs/croissant-spec.html#fileset">cr:FileSet</a>
+      <a href="https://docs.mlcommons.org/croissant/docs/croissant-spec.html#fileobject">cr:FileObject</a> or<br>
+      <a href="https://docs.mlcommons.org/croissant/docs/croissant-spec.html#fileset">cr:FileSet</a>
     </td>
     <td>MANY</td>
     <td>
@@ -405,7 +405,7 @@ Version 1.1.0
 
 ## Resources
 
-### [cr:FileObject](https://mlcommons.github.io/croissant/docs/croissant-spec.html#fileobject)
+### [cr:FileObject](https://docs.mlcommons.org/croissant/docs/croissant-spec.html#fileobject)
 
 <table>
   <thead>
@@ -459,15 +459,15 @@ Version 1.1.0
   <tr>
     <td>cr:containedIn</td>
     <td>
-      <a href="https://mlcommons.github.io/croissant/docs/croissant-spec.html#fileobject">cr:FileObject</a> or<br>
-      <a href="https://mlcommons.github.io/croissant/docs/croissant-spec.html#fileset">cr:FileSet</a>
+      <a href="https://docs.mlcommons.org/croissant/docs/croissant-spec.html#fileobject">cr:FileObject</a> or<br>
+      <a href="https://docs.mlcommons.org/croissant/docs/croissant-spec.html#fileset">cr:FileSet</a>
     </td>
     <td>MANY</td>
     <td>Another <code>FileObject</code> or <code>FileSet</code> that this one is contained in, e.g., in the case of a file extracted from an archive. When this property is present, the <code>contentUrl</code> is evaluated as a relative path within the container object.</td>
   </tr>
 </table>
 
-### [cr:FileSet](https://mlcommons.github.io/croissant/docs/croissant-spec.html#fileset)
+### [cr:FileSet](https://docs.mlcommons.org/croissant/docs/croissant-spec.html#fileset)
 
 <table>
   <thead>
@@ -521,8 +521,8 @@ Version 1.1.0
   <tr>
     <td>cr:containedIn</td>
     <td>
-      Reference<<a href="https://mlcommons.github.io/croissant/docs/croissant-spec.html#fileobject">cr:FileObject</a>> or<br>
-      Reference<<a href="https://mlcommons.github.io/croissant/docs/croissant-spec.html#fileset">cr:FileSet</a>>
+      Reference<<a href="https://docs.mlcommons.org/croissant/docs/croissant-spec.html#fileobject">cr:FileObject</a>> or<br>
+      Reference<<a href="https://docs.mlcommons.org/croissant/docs/croissant-spec.html#fileset">cr:FileSet</a>>
     </td>
     <td>MANY</td>
     <td>The source of data for the <code>FileSet</code>, e.g., an archive. If multiple values are provided for <code>containedIn</code>, then the union of their contents is taken (e.g., this can be used to combine files from multiple archives).</td>
@@ -543,7 +543,7 @@ Version 1.1.0
 
 ## RecordSets
 
-### [cr:RecordSet](https://mlcommons.github.io/croissant/docs/croissant-spec.html#recordset)
+### [cr:RecordSet](https://docs.mlcommons.org/croissant/docs/croissant-spec.html#recordset)
 
 <table>
   <thead>
@@ -566,7 +566,7 @@ Version 1.1.0
   </tr>
   <tr>
     <td>cr:field</td>
-    <td><a href="https://mlcommons.github.io/croissant/docs/croissant-spec.html#field">cr:Field</a></td>
+    <td><a href="https://docs.mlcommons.org/croissant/docs/croissant-spec.html#field">cr:Field</a></td>
     <td>MANY</td>
     <td>A data element that appears in the records of the <code>RecordSet</code> (e.g., one column of a table).</td>
   </tr>
@@ -578,7 +578,7 @@ Version 1.1.0
   </tr>
 </table>
 
-### [cr:Field](https://mlcommons.github.io/croissant/docs/croissant-spec.html#field)
+### [cr:Field](https://docs.mlcommons.org/croissant/docs/croissant-spec.html#field)
 
 <table>
   <thead>
@@ -601,19 +601,19 @@ Version 1.1.0
   </tr>
   <tr>
     <td>cr:source</td>
-    <td><a href="https://mlcommons.github.io/croissant/docs/croissant-spec.html#datasource">cr:DataSource</a></td>
+    <td><a href="https://docs.mlcommons.org/croissant/docs/croissant-spec.html#datasource">cr:DataSource</a></td>
     <td>ONE</td>
     <td>The data source of the field. This will generally reference a <code>FileObject</code> or <code>FileSet</code>'s contents (e.g., a specific column of a table).</td>
   </tr>
   <tr>
     <td>cr:dataType</td>
-    <td><a href="https://mlcommons.github.io/croissant/docs/croissant-spec.html#datatype">cr:DataType</a></td>
+    <td><a href="https://docs.mlcommons.org/croissant/docs/croissant-spec.html#datatype">cr:DataType</a></td>
     <td>MANY</td>
     <td>The data type of the field, identified by the URI of the corresponding class. It could be either an atomic type (e.g, <code>sc:Integer</code>) or a semantic type (e.g., <code>sc:GeoLocation</code>).</td>
   </tr>
 </table>
 
-### [cr:DataSource](https://mlcommons.github.io/croissant/docs/croissant-spec.html#datasource)
+### [cr:DataSource](https://docs.mlcommons.org/croissant/docs/croissant-spec.html#datasource)
 
 <table>
   <thead>
@@ -624,31 +624,31 @@ Version 1.1.0
   </thead>
   <tr>
     <td>cr:fileObject</td>
-    <td>Reference<<a href="https://mlcommons.github.io/croissant/docs/croissant-spec.html#fileobject">cr:FileObject</a>></td>
+    <td>Reference<<a href="https://docs.mlcommons.org/croissant/docs/croissant-spec.html#fileobject">cr:FileObject</a>></td>
     <td>ONE</td>
     <td>The name of the referenced <code>FileObject</code> source of the data.</td>
   </tr>
   <tr>
     <td>cr:fileSet</td>
-    <td>Reference<<a href="https://mlcommons.github.io/croissant/docs/croissant-spec.html#fileset">cr:FileSet</a>></td>
+    <td>Reference<<a href="https://docs.mlcommons.org/croissant/docs/croissant-spec.html#fileset">cr:FileSet</a>></td>
     <td>ONE</td>
     <td>The name of the referenced <code>FileSet</code> source of the data.</td>
   </tr>
   <tr>
     <td>cr:recordSet</td>
-    <td>Reference<<a href="https://mlcommons.github.io/croissant/docs/croissant-spec.html#recordset">cr:RecordSet</a>></td>
+    <td>Reference<<a href="https://docs.mlcommons.org/croissant/docs/croissant-spec.html#recordset">cr:RecordSet</a>></td>
     <td>ONE</td>
     <td>The name of the referenced <code>RecordSet</code> source.</td>
   </tr>
   <tr>
     <td>cr:extract</td>
-    <td><a href="https://mlcommons.github.io/croissant/docs/croissant-spec.html#extract">cr:Extract</a></td>
+    <td><a href="https://docs.mlcommons.org/croissant/docs/croissant-spec.html#extract">cr:Extract</a></td>
     <td>ONE</td>
     <td>The extraction method from the provided source.</td>
   </tr>
 </table>
 
-#### [cr:Extract](https://mlcommons.github.io/croissant/docs/croissant-spec.html#extract)
+#### [cr:Extract](https://docs.mlcommons.org/croissant/docs/croissant-spec.html#extract)
 
 <table>
   <thead>
@@ -679,7 +679,7 @@ Version 1.1.0
   </tr>
 </table>
 
-### [cr:DataType](https://mlcommons.github.io/croissant/docs/croissant-spec.html#datatype)
+### [cr:DataType](https://docs.mlcommons.org/croissant/docs/croissant-spec.html#datatype)
 
 `DataType` is a subclassOf: [sc:URL](https://schema.org/URL) and represents the data type of values expected for a Field in a RecordSet. This class is inspired by the `Datatype` class in [CSVW](https://csvw.org/). In addition to simple atomic types, types can be semantic types, such as [schema.org](https://schema.org/DataType) classes, as well types defined in other vocabularies.
 
