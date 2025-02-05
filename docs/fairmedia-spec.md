@@ -759,10 +759,4 @@ Version 1.1.0
     <td>ONE</td>
     <td>The telephone number of the person.</td>
   </tr>
-  <tr>
-    <td><a href="https://schema.org/memberOf">sc:memberOf</a></td>
-    <td><a href="https://schema.org/Organization">sc:Organization</a></td>
-    <td>ONE</td>
-    <td>The organization the person is a member of.</td>
-  </tr>
 </table>
