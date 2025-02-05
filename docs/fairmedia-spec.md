@@ -159,7 +159,7 @@ Version 1.1.0
     </td>
   </tr>
   <tr>
-    <td>sc:releaseNotes</td>
+    <td><a href="https://schema.org/releaseNotes">sc:releaseNotes</a></td>
     <td>
       <a href="https://schema.org/Text">sc:Text</a> or<br>
       <a href="https://schema.org/URL">sc:URL</a>
