@@ -32,7 +32,7 @@ fair:dataSource a rdf:Property ;
 
 fair:dataUsageTerms a rdf:Property ;
   rdfs:label "dataUsageTerms" ;
-  rdfs:comment "Specifies the conditions under which the data set may be processed, including permitted commercial and non-commercial uses, text and data mining, etc." ;
+  rdfs:comment "Specifies the conditions under which the dataset may be processed, including permitted commercial and non-commercial uses, text and data mining, etc." ;
   schema:domainIncludes schema:Dataset ;
   schema:rangeIncludes schema:Text .
 

@@ -94,7 +94,7 @@ To address these gaps, we have extended the Croissant specification, resulting i
   </tr>
   <tr>
     <td><code>dataUsageTerms</code></td>
-    <td>Specifies the conditions under which the data set may be processed, including permitted commercial and non-commercial uses, text and data mining, etc.</td>
+    <td>Specifies the conditions under which the dataset may be processed, including permitted commercial and non-commercial uses, text and data mining, etc.</td>
   </tr>
   <tr>
     <td><code>userRights</code></td>

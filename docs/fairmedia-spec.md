@@ -212,7 +212,7 @@ Version 1.1.0
     <td>fm:dataUsageTerms</td>
     <td><a href="https://schema.org/Text">sc:Text</a></td>
     <td>ONE</td>
-    <td>Specifies the conditions under which the data set may be processed, including permitted commercial and non-commercial uses, text and data mining, etc.</td>
+    <td>Specifies the conditions under which the dataset may be processed, including permitted commercial and non-commercial uses, text and data mining, etc.</td>
   </tr>
   <tr>
     <td>fm:userRights</td>
