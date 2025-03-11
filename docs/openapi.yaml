@@ -255,94 +255,6 @@ paths:
                 type: string
         404:
           description: Dataset not found
-  /people:
-    get:
-      security:
-        - bearerAuth: []
-      tags:
-        - People
-      summary: Find all people
-      responses:
-        200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/PersonSelect'
-        401:
-          description: Unauthorized
-  /people/{id}:
-    parameters:
-      - name: id
-        in: path
-        description: ID of the person
-        required: true
-        schema:
-          type: string
-          format: uuid
-    get:
-      security:
-        - bearerAuth: []
-      tags:
-        - People
-      summary: Find person by ID
-      responses:
-        200:
-          description: Person found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PersonSelect'
-        401:
-          description: Unauthorized
-        404:
-          description: Person not found
-  /organizations:
-    get:
-      security:
-        - bearerAuth: []
-      tags:
-        - Organizations
-      summary: Find all organizations
-      responses:
-        200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/OrganizationSelect'
-        401:
-          description: Unauthorized
-  /organizations/{id}:
-    parameters:
-      - name: id
-        in: path
-        description: ID of the organization
-        required: true
-        schema:
-          type: string
-          format: uuid
-    get:
-      security:
-        - bearerAuth: []
-      tags:
-        - Organizations
-      summary: Find organization by ID
-      responses:
-        200:
-          description: Organization found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/OrganizationSelect'
-        401:
-          description: Unauthorized
-        404:
-          description: Organization not found
   /app/title:
     get:
       tags:
@@ -444,7 +356,50 @@ paths:
           description: Unauthorized
         404:
           description: Access token not found
-
+  /app/dataset-templates:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - App
+      summary: Find all dataset templates
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DatasetSelect'
+        401:
+          description: Unauthorized
+  /app/dataset-templates/{id}:
+    parameters:
+      - name: id
+        in: path
+        description: ID of the dataset
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - App
+      summary: Find dataset template by ID
+      responses:
+        200:
+          description: Dataset template found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatasetSelect'
+        401:
+          description: Unauthorized
+        404:
+          description: Dataset template not found
 
 components:
   securitySchemes:
@@ -538,7 +493,8 @@ components:
         - name
         - abstract
         - isPublished
-        - isPublic
+        - isVisible
+        - isTemplate
         - version
       properties:
         name:
@@ -589,8 +545,11 @@ components:
         isPublished:
           description: States whether a Dataset has been published.
           type: boolean
-        isPublic:
+        isVisible:
           description: States whether a Dataset is publicly or only privately visible.
+          type: boolean
+        isTemplate:
+          description: States whether a Dataset is a template.
           type: boolean
         keywords:
           description: A set of keywords associated with the Dataset, either as free text, or a DefinedTerm with a formal definition.
@@ -873,6 +832,9 @@ components:
         sha256:
           description: Checksum for the file contents.
           type: string
+        isVisible:
+          description: States whether the content url is publicly or only privately visible.
+          type: boolean
     FileObjectInsert:
       allOf:
         - $ref: '#/components/schemas/File'
