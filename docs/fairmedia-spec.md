@@ -146,6 +146,24 @@ Version 1.1.0
     <td>A resource from which this dataset is derived or from which it is a modification or adaptation.</td>
   </tr>
   <tr>
+    <td>fm:dependsOn</td>
+    <td>
+      Reference<<a href="https://schema.org/Dataset">sc:Dataset</a>> or<br>
+      <a href="https://schema.org/URL">sc:URL</a>
+    </td>
+    <td>MANY</td>
+    <td>A resource this Dataset depends on in order to be meaningfully interpreted.</td>
+  </tr>
+  <tr>
+    <td>fm:isSuccessorOf</td>
+    <td>
+      Reference<<a href="https://schema.org/Dataset">sc:Dataset</a>> or<br>
+      <a href="https://schema.org/URL">sc:URL</a>
+    </td>
+    <td>MANY</td>
+    <td>A resource of which this dataset is the direct successor.</td>
+  </tr>
+  <tr>
     <td><a href="https://schema.org/version">sc:version</a></td>
     <td>
       <a href="https://schema.org/Number">sc:Number</a> or<br>

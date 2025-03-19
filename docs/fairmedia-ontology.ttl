@@ -23,14 +23,14 @@ fair:dependsOn a rdf:Property ;
   rdfs:comment "A resource this Dataset depends on in order to be meaningfully interpreted." ;
   rdfs:subPropertyOf schema:isBasedOn ;
   schema:domainIncludes schema:Dataset ;
-  schema:rangeIncludes schema:URL .
+  schema:rangeIncludes schema:URL, schema:Dataset .
 
 fair:isSuccessorOf a rdf:Property ;
   rdfs:label "isSuccessorOf" ;
   rdfs:comment "A resource of which this dataset is the direct successor." ;
   rdfs:subPropertyOf schema:isBasedOn ;
   schema:domainIncludes schema:Dataset ;
-  schema:rangeIncludes schema:URL .
+  schema:rangeIncludes schema:URL, schema:Dataset .
 
 schema:license a rdf:Property ;
   rdfs:label "license" ;
