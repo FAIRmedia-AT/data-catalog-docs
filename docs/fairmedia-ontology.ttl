@@ -18,6 +18,20 @@ fair:ControllershipEnumeration a rdf:Class ;
 
 # Dataset level properties
 
+fair:dependsOn a rdf:Property ;
+  rdfs:label "dependsOn" ;
+  rdfs:comment "A resource this Dataset depends on in order to be meaningfully interpreted." ;
+  rdfs:subPropertyOf schema:isBasedOn ;
+  schema:domainIncludes schema:Dataset ;
+  schema:rangeIncludes schema:URL .
+
+fair:isSuccessorOf a rdf:Property ;
+  rdfs:label "isSuccessorOf" ;
+  rdfs:comment "A resource of which this dataset is the direct successor." ;
+  rdfs:subPropertyOf schema:isBasedOn ;
+  schema:domainIncludes schema:Dataset ;
+  schema:rangeIncludes schema:URL .
+
 schema:license a rdf:Property ;
   rdfs:label "license" ;
   rdfs:comment "A detailed description of the license conditions, including specific rights of use, restrictions and conditions for further processing." ;
